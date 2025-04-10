@@ -42,6 +42,11 @@ router.post('/api/dish', async (req, res) => {
     const { name, ingredients, preparationSteps, cookingTime, origin, spiceLevel } = req.body;
   
     try {
+        const existingDish = await Dish.findOne({ name });
+        if (existingDish) {
+            return res.status(409).json({ message: 'Dish already exists' });
+        }
+  
         const newDish = new Dish({ name, ingredients, preparationSteps, cookingTime, origin, spiceLevel });
         await newDish.save();
         res.status(201).json(newDish);
