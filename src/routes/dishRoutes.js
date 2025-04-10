@@ -62,7 +62,11 @@ router.post('/api/dish', async (req, res) => {
 router.put('/api/dishes/:id', async (req, res) => {
     try {
         const updatedDish = await Dish.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
+  
+        if (!updatedDish) {
+            return res.status(404).json({ message: 'Dish not found' });
+        }
+  
         res.json(updatedDish);
     } catch (err) {
         res.status(500).json({ message: err.message });
