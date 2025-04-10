@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
+
 const dishSchema = new mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     name: { type: String, required: true },
     ingredients: { type: [String], required: true },
     preparationSteps: { type: [String], required: true },
