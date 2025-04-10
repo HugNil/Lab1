@@ -33,3 +33,19 @@ router.get('/api/dish', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+
+
+// POST - Create new dish
+router.post('/api/dish', async (req, res) => {
+    const { name, ingredients, preparationSteps, cookingTime, origin, spiceLevel } = req.body;
+  
+    try {
+        const newDish = new Dish({ name, ingredients, preparationSteps, cookingTime, origin, spiceLevel });
+        await newDish.save();
+        res.status(201).json(newDish);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
