@@ -54,3 +54,17 @@ router.post('/api/dish', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+
+
+// PUT - Update existing dish
+router.put('/api/dishes/:id', async (req, res) => {
+    try {
+        const updatedDish = await Dish.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+        res.json(updatedDish);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
