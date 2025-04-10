@@ -20,14 +20,14 @@ router.get('/api/dishes', async (req, res) => {
 
 // GET - Get dish by ID
 router.get('/api/dish', async (req, res) => {
-    const { name } = req.query;
+    const { name } = req.query;  // Retrieve name from query parameters
   
     try {
         if (!name) {
             return res.status(400).json({ message: 'Name parameter is required' });
         }
   
-        const dishes = await Dish.find({ name: { $regex: name, $options: 'i' } });
+        const dishes = await Dish.find({ name: { $regex: name, $options: 'i' } });  // Search for dishes based on name
         res.json(dishes);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -61,18 +61,20 @@ router.post('/api/dish', async (req, res) => {
 // PUT - Update existing dish
 router.put('/api/dishes/:id', async (req, res) => {
     try {
+        // Retreives ID from URL parameters
         const updatedDish = await Dish.findByIdAndUpdate(req.params.id, req.body, { new: true });
   
         if (!updatedDish) {
             return res.status(404).json({ message: 'Dish not found' });
         }
   
+        // Return the updated dish
         res.json(updatedDish);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
-
+  
 
 
 
