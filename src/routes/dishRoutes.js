@@ -72,3 +72,21 @@ router.put('/api/dishes/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+
+
+// DELETE - Delete existing dish
+router.delete('/api/dish/:id', async (req, res) => {
+    try {
+        const dishes = await Dish.findByIdAndDelete(req.params.id);
+        if (!dishes) {
+            return res.status(404).json({ message: 'Dish not found' });
+        }
+        res.json({ message: 'Dish deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+  
+module.exports = router;
