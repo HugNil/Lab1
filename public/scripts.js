@@ -28,8 +28,10 @@ function displayDishes(dishes) {
             <td>${dish.spiceLevel}</td>
             <td>${dish.preparationSteps.join(', ')}</td>
             <td>
-                <button onclick="updateDish('${dish._id}')">Update</button>
-                <button onclick="deleteDish('${dish._id}')">Delete</button>
+                <div class="action_button">
+                    <button onclick="updateDish('${dish._id}')">Update</button>
+                    <button onclick="deleteDish('${dish._id}')">Delete</button>
+                </div>
             </td>
         `;
         tableBody.appendChild(row);
