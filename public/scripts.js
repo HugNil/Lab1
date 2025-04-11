@@ -38,5 +38,41 @@ function displayDishes(dishes) {
     });
 }
 
+
+
+
+// Function to add a new dish via POST
+async function addDish(event) {
+    event.preventDefault(); // Prevent form submission
+  
+    const name = document.getElementById('dishName').value;
+    const ingredients = document.getElementById('dishIngredients').value.split(',');
+    const cookingTime = document.getElementById('dishCookingTime').value;
+    const origin = document.getElementById('dishOrigin').value;
+    const spiceLevel = document.getElementById('dishSpiceLevel').value;
+    const preparationSteps = document.getElementById('dishPreparationSteps').value.split(',');
+  
+    const dishData = { name, ingredients, cookingTime, origin, spiceLevel, preparationSteps };
+  
+    try {
+        const response = await fetch('http://localhost:5000/api/dish', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dishData),
+        });
+  
+        if (response.ok) {
+            alert('Dish added successfully!');
+            searchAllDishes();  // Refresh the list after adding
+      } else {
+            alert('Failed to add dish');
+        }
+    } catch (error) {
+        console.error('Error adding dish:', error);
+    }
+}
+
 // Fetch all dishes when the page loads
 window.onload = searchAllDishes;
