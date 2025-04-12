@@ -74,5 +74,92 @@ async function addDish(event) {
     }
 }
 
+
+
+
+
+// Function to update a dish via PUT
+async function updateDish(dishId) {
+    const name = prompt('Enter new name for the dish:');
+    if (name === null || name.trim() === "") return;
+
+    const ingredients = prompt('Enter new ingredients for the dish (comma separated):').split(',');
+    if (ingredients === null) return; 
+
+    const cookingTime = prompt('Enter new cooking time for the dish (in minutes):');
+    if (cookingTime === null || cookingTime.trim() === "") return; // Avbryt om användaren avbryter eller lämnar tomt
+    if (isNaN(cookingTime) || !Number.isInteger(Number(cookingTime))) {
+        alert('Cooking time must be a whole number.');
+        return; // Avbryt om cookingTime inte är ett heltal
+    }
+    const origin = prompt('Enter new origin for the dish:');
+    if (origin === null || origin.trim() === "") return;
+
+    const spiceLevel = prompt('Enter new spice level for the dish:');
+    if (spiceLevel === null || spiceLevel.trim() === "") return;
+
+    const preparationSteps = prompt('Enter new preparation steps for the dish (comma separated):').split(',');
+
+    // Object to hold the data to be sent in the request body
+    let jsonBody = {
+        name,
+        ingredients,
+        cookingTime,
+        origin,
+        spiceLevel
+    };
+
+    // Add preparation steps only if they are provided
+    if (preparationSteps.length > 0 && preparationSteps[0].trim() !== "") {
+        jsonBody.preparationSteps = preparationSteps;
+    }
+
+    // Control if all required fields are filled
+    if (name && ingredients && spiceLevel && cookingTime && origin) {
+        try {
+            // Request to update the dish
+            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonBody)
+            });
+
+            if (response.ok) {
+                alert('Dish updated successfully!');
+                searchAllDishes();  // Update with correct data
+            } else {
+                alert('Failed to update dish');
+            }
+        } catch (error) {
+            console.error('Error updating dish:', error);
+        }
+    } else {
+        alert('All fields except preparation steps are required.');
+    }
+}
+
+
+
+
+// Function to delete a dish via DELETE
+async function deleteDish(dishId) {
+    if (confirm('Are you sure you want to delete this dish?')) {
+        try {
+            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, {
+                method: 'DELETE',
+            });
+  
+        if (response.ok) {
+            alert('Dish deleted successfully!');
+            searchAllDishes();  // Update with correct data
+        }
+      } catch (error) {
+            console.error('Error deleting dish:', error);
+        }
+    }
+}
+
 // Fetch all dishes when the page loads
 window.onload = searchAllDishes;
