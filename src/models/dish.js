@@ -10,6 +10,6 @@ const dishSchema = new mongoose.Schema({
     spiceLevel: { type: String }
 });
 
-const Dish = mongoose.model('Dish', dishSchema);
+const Dish = mongoose.model('Dish', dishSchema); // Create a model based on the schema
 
 module.exports = Dish;

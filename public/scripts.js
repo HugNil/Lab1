@@ -1,9 +1,9 @@
 // Function to fetch all dishes or search based on name
 async function searchAllDishes() {
-    const url = "http://localhost:5000/api/dishes";
+    const uri = "http://localhost:5000/api/dishes"; // URL to fetch all dishes
     try {
-        const response = await fetch(url);
-        const dishes = await response.json();
+        const response = await fetch(uri); // Fetch all dishes from the server
+        const dishes = await response.json(); // Parse the response to JSON
         displayDishes(dishes);
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -16,9 +16,10 @@ async function searchAllDishes() {
 // Function to display dishes in the table
 function displayDishes(dishes) {
     const tableBody = document.querySelector('#dishesTable tbody');
-    tableBody.innerHTML = '';
-  
-    dishes.forEach(dish => {
+    tableBody.innerHTML = ''; // Clear the table before adding new rows
+
+    // Add rows for each dish
+    dishes.forEach(dish => { // Create a new row for each dish
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${dish.name}</td>
@@ -34,7 +35,7 @@ function displayDishes(dishes) {
                 </div>
             </td>
         `;
-        tableBody.appendChild(row);
+        tableBody.appendChild(row); // Append the new row to the table body
     });
 }
 
@@ -44,7 +45,8 @@ function displayDishes(dishes) {
 // Function to add a new dish via POST
 async function addDish(event) {
     event.preventDefault(); // Prevent form submission
-  
+
+    // Get values from the form fields
     const name = document.getElementById('dishName').value;
     const ingredients = document.getElementById('dishIngredients').value.split(',');
     const cookingTime = document.getElementById('dishCookingTime').value;
@@ -52,26 +54,32 @@ async function addDish(event) {
     const spiceLevel = document.getElementById('dishSpiceLevel').value;
     const preparationSteps = document.getElementById('dishPreparationSteps').value.split(',');
   
-    const dishData = { name, ingredients, cookingTime, origin, spiceLevel, preparationSteps };
+    const dishData = { name, ingredients, cookingTime, origin, spiceLevel, preparationSteps }; // Object to hold the data to be sent in the request body
   
     try {
-        const response = await fetch('http://localhost:5000/api/dish', {
+        const response = await fetch('http://localhost:5000/api/dish', { // URI to add a new dish
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(dishData),
+            body: JSON.stringify(dishData), // Convert the object to a JSON string
         });
   
         if (response.ok) {
             alert('Dish added successfully!');
-            searchAllDishes();  // Refresh the list after adding
+            searchAllDishes(); // Refresh the list after adding
       } else {
             alert('Failed to add dish');
         }
+        resetForm(); // Reset the form fields
     } catch (error) {
         console.error('Error adding dish:', error);
     }
+}
+
+function resetForm() {
+    const form = document.getElementById('addDishForm');
+    form.reset();
 }
 
 
@@ -87,10 +95,10 @@ async function updateDish(dishId) {
     if (ingredients === null) return; 
 
     const cookingTime = prompt('Enter new cooking time for the dish (in minutes):');
-    if (cookingTime === null || cookingTime.trim() === "") return; // Avbryt om användaren avbryter eller lämnar tomt
-    if (isNaN(cookingTime) || !Number.isInteger(Number(cookingTime))) {
+    if (cookingTime === null || cookingTime.trim() === "") return;
+    if (isNaN(cookingTime) || !Number.isInteger(Number(cookingTime))) { // Check if cooking time is a number and a whole number
         alert('Cooking time must be a whole number.');
-        return; // Avbryt om cookingTime inte är ett heltal
+        return;
     }
     const origin = prompt('Enter new origin for the dish:');
     if (origin === null || origin.trim() === "") return;
@@ -118,7 +126,7 @@ async function updateDish(dishId) {
     if (name && ingredients && spiceLevel && cookingTime && origin) {
         try {
             // Request to update the dish
-            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, {
+            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, { // URI to update the dish
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,7 +136,7 @@ async function updateDish(dishId) {
 
             if (response.ok) {
                 alert('Dish updated successfully!');
-                searchAllDishes();  // Update with correct data
+                searchAllDishes(); // Update with correct data
             } else {
                 alert('Failed to update dish');
             }
@@ -147,7 +155,7 @@ async function updateDish(dishId) {
 async function deleteDish(dishId) {
     if (confirm('Are you sure you want to delete this dish?')) {
         try {
-            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, {
+            const response = await fetch(`http://localhost:5000/api/dish/${dishId}`, { // URL to delete the dish
                 method: 'DELETE',
             });
   
