@@ -1,6 +1,6 @@
 // Function to fetch all dishes or search based on name
 async function searchAllDishes() {
-    const uri = "http://localhost:5000/api/dishes"; // URL to fetch all dishes
+    const uri = "http://localhost:5000/api/dishes"; // URI to fetch all dishes
     try {
         const response = await fetch(uri); // Fetch all dishes from the server
         const dishes = await response.json(); // Parse the response to JSON

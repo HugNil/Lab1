@@ -8,21 +8,7 @@
 </head>
 <body>
     <main>
-        <h1>Recipe List</h1>
-        <!-- Add Dish Form -->
-        <section>
-            <h2>Add a new dish</h2>
-            <form id="addDishForm" onsubmit="addDish(event)">
-            <input type="text" id="dishName" placeholder="Dish name" required>
-            <textarea type="text" id="dishIngredients" placeholder="Ingredients (comma separated)" required></textarea>
-            <input type="number" id="dishCookingTime" placeholder="Cooking time (minutes)" required>
-            <input type="text" id="dishOrigin" placeholder="Origin" required>
-            <input type="text" id="dishSpiceLevel" placeholder="Spice level" required>
-            <textarea id="dishPreparationSteps" placeholder="Preparation steps (comma seperated)"></textarea>
-            <button type="submit">Add Dish</button>
-            </form>
-        </section>
-
+        <h1>Recipes</h1>
         <!-- Table for displaying dishes -->
         <section>
             <table class="table" id="dishesTable">
@@ -41,6 +27,20 @@
                 <!-- Data will be injected here via JavaScript -->
                 </tbody>
             </table>
+        </section>
+
+        <!-- Add Dish Form -->
+        <section class="add-dish-form">
+            <h2>Add a new dish</h2>
+            <form id="addDishForm" onsubmit="addDish(event)">
+                <input type="text" id="dishName" placeholder="Dish name" required>
+                <textarea type="text" id="dishIngredients" placeholder="Ingredients (comma separated)" required></textarea>
+                <input type="number" id="dishCookingTime" placeholder="Cooking time (minutes)" required>
+                <input type="text" id="dishOrigin" placeholder="Origin" required>
+                <input type="text" id="dishSpiceLevel" placeholder="Spice level" required>
+                <textarea id="dishPreparationSteps" placeholder="Preparation steps (comma seperated)"></textarea>
+                <button type="submit">Add Dish</button>
+            </form>
         </section>
     </main>
     <script src="scripts.js"></script>
