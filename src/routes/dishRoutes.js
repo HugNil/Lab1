@@ -9,7 +9,7 @@ const { getAllDishes, getDishByName, addDish, updateDish, deleteDish } = require
 router.get('/api/dishes', getAllDishes);
 
 // GET - Get dish by ID
-router.get('/api/dish', getDishByName);
+router.get('/api/dish/:name', getDishByName);
 
 // POST - Create new dish
 router.post('/api/dish', addDish);

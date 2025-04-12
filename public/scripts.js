@@ -55,7 +55,14 @@ async function addDish(event) {
     const preparationSteps = document.getElementById('dishPreparationSteps').value.split(',');
   
     const dishData = { name, ingredients, cookingTime, origin, spiceLevel, preparationSteps }; // Object to hold the data to be sent in the request body
-  
+    
+    const existingDish = await fetch(`http://localhost:5000/api/dish/${name}`); // Check if the dish already exists
+    if (existingDish.ok) {
+        alert('Dish already exists!'); // Alert if the dish already exists
+        return;
+    }
+
+
     try {
         const response = await fetch('http://localhost:5000/api/dish', { // URI to add a new dish
             method: 'POST',
