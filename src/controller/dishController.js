@@ -46,7 +46,7 @@ const getDishById = async (req, res) => {
   
     try {
         if (!id) {
-            return res.status(400).json({ message: 'Name parameter is required' });
+            return res.status(400).json({ message: 'Id parameter is required' });
         }
   
         const dishes = await Dish.findById(id);  // Search for dishes based on id
