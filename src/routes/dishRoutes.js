@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllDishes, getDishByName, addDish, updateDish, deleteDish } = require('../controller/dishController');
+const { getAllDishes, getDishByName, addDish, updateDish, deleteDish, getDishById } = require('../controller/dishController');
 
 
 
@@ -10,6 +10,8 @@ router.get('/api/dishes', getAllDishes);
 
 // GET - Get dish by ID
 router.get('/api/dish/:name', getDishByName);
+
+router.get('/api/dish/id/:id', getDishById);
 
 // POST - Create new dish
 router.post('/api/dish', addDish);

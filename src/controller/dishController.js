@@ -40,6 +40,28 @@ const getDishByName = async (req, res) => {
 
 
 
+// GET - Get dish by ID
+const getDishById = async (req, res) => {
+    const { id } = req.params;  // Retrieve id from req.parameters
+  
+    try {
+        if (!id) {
+            return res.status(400).json({ message: 'Name parameter is required' });
+        }
+  
+        const dishes = await Dish.findById(id);  // Search for dishes based on id
+        if (!dishes) {
+            return res.status(404).json({ message: 'Dish not found' });
+        }
+        res.json(dishes);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+
+
+
 // POST - Create new dish
 const addDish = async (req, res) => {
     const { name, ingredients, preparationSteps, cookingTime, origin, spiceLevel } = req.body;
@@ -88,4 +110,4 @@ const deleteDish = async (req, res) => {
     }
 };
 
-module.exports = { getAllDishes, getDishByName, addDish, updateDish, deleteDish };
+module.exports = { getAllDishes, getDishByName, addDish, updateDish, deleteDish, getDishById };
